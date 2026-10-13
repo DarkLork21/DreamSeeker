@@ -1,2 +1,6 @@
 .uasset filter=lfs diff=lfs merge=lfs -text
+<<<<<<< HEAD
+=======
+.umapP filter=lfs diff=lfs merge=lfs -text
+>>>>>>> main
 .umap filter=lfs diff=lfs merge=lfs -text
