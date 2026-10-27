@@ -1,0 +1,9 @@
+# Unreal Engine generated files
+Binaries/
+DerivedDataCache/
+Intermediate/
+Saved/
+.vs/
+
+# Explicit project cache rule
+/Dream_Seker_Unreal/Intermediate/
