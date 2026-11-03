@@ -7,3 +7,6 @@ Saved/
 
 # Explicit project cache rule
 /Dream_Seker_Unreal/Intermediate/
+
+# Original underwater source project; integrated assets live in Content/Underwater_1
+/Dream_Seker_Unreal/UE_4.20_Underwater_World_v1.0/
