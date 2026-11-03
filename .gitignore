@@ -10,3 +10,6 @@ Saved/
 
 # Original underwater source project; integrated assets live in Content/Underwater_1
 /Dream_Seker_Unreal/UE_4.20_Underwater_World_v1.0/
+Dream_Seker_Unreal/Content/DreamSeeker/Blueprints/Components/BPC_Lucidity.uasset
+Dream_Seker_Unreal/Content/DreamSeeker/UI/WBP_LucidityBar.uasset
+Dream_Seker_Unreal/Content/Level_1_Learning.umap
