@@ -107,4 +107,3 @@ for a in actors.get_all_level_actors():
     if a.get_actor_label()=='Memory 2 entrance':a.set_editor_property('destination',A.load_asset(MAP))
 assert levels.save_current_level()
 unreal.log('RACE_SCENE_READY detail_batches='+str(len(batches)))
-
