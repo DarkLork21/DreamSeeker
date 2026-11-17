@@ -21,6 +21,8 @@ swimmer=next(p for p in cast.list_output_pins() if str(p.get_pin_name()).startsw
 swimpath='/Game/DreamSeeker/Swimming/BP_RhythmSwimmer.BP_RhythmSwimmer_C'
 component=G.read('Lucidity',swimpath,swimmer)
 e=G.set(cast.find_then_pin(),'CurrentLucidity','50','/Game/DreamSeeker/Blueprints/Components/BPC_Lucidity.BPC_Lucidity_C',component)
+e=G.set(e,'HelpOpen','false',swimpath,swimmer)
+e=G.set(e,'UseMouseSteering','false',swimpath,swimmer)
 for i in range(6):command('ke * KickLeft',.1)
 command('GetAll BP_RhythmSwimmer_C GoodStreak')
 command('GetAll BPC_Lucidity_C CurrentLucidity')
