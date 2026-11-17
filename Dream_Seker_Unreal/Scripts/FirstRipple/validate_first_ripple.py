@@ -26,13 +26,13 @@ report['original_level_loads']=bool(A.load_asset('/Game/Level_1_Learning'))
 report['uses_team_lucidity']=A.does_asset_exist('/Game/DreamSeeker/Blueprints/Components/BPC_Lucidity')
 saved=Path(unreal.Paths.project_saved_dir());logs=saved/'Logs'
 def log(name):return (logs/name).read_text()
-rhythm=log('BalanceRhythm.log');normal=log('BalanceNormalCurrent.log');sprint=log('BalanceSprintCurrent.log');death=log('FinalBalanceFailure.log');route=log('FinalSwimming.log')
+rhythm=log('EasierRhythm.log');normal=log('BalanceNormalCurrent.log');sprint=log('BalanceSprintCurrent.log');death=log('FinalBalanceFailure.log');route=log('FinalSwimming.log')
 def values(text):return [float(v) for v in re.findall(r'PersistentLevel.BP_RhythmSwimmer_C_0.Lucidity.CurrentLucidity = ([\d.]+)',text)]
 rx=values(rhythm);nx=[float(v) for v in re.findall(r'CollisionCylinder.RelativeLocation = \(X=([\d.\-]+)',normal)]
 sx=[float(v) for v in re.findall(r'CollisionCylinder.RelativeLocation = \(X=([\d.\-]+)',sprint)]
 minimum=float(re.search(r'MinimumLucidity = ([\d.]+)',sprint).group(1));crossed=float(re.search(r'CrossedAt = ([\d.]+)',sprint).group(1))
 report.update({'perfect_rhythm_lucidity':rx,'normal_current_final_x':nx[-1],'sprint_final_x':sx[-1],'sprint_crossed_at_seconds':crossed,'minimum_lucidity_during_sprint':minimum,
-        'perfect_rhythm_restores':rx[0]==74 and rx[1]==74,'last_dream_recovery_switch':rx[2]==74,
+        'perfect_rhythm_restores':rx[0]==90 and rx[1]==90,'last_dream_recovery_switch':rx[2]==90,
         'normal_cannot_cross':nx[-1]<7600,'sprint_can_cross':sx[-1]>8600 and crossed>0 and minimum>0,
         'empty_bar_fails':'DreamFailed = True' in death,'restarts_same_dream':death.count('Load map complete /Game/__FirstRippleQA/BalanceFailure')>=2,
         'restart_refills':values(death).count(100)>=2,'whole_route_completes':'Load map complete /Game/Dreamhub_MemoryCauseway' in route,
