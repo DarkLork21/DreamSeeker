@@ -8,7 +8,7 @@ Open Windows/Dream_Seker_Unreal.exe. Choose Start Game, move right through the h
 - Point the mouse in the direction Naia should swim. Turning is smoothed; the camera follows at a fixed angle.
 - A gold direction guide shows the current swimming heading. Cursor positions outside the game window and within the small dead zone around Naia leave the previous direction unchanged.
 - Tap A and D alternately for left and right kicks. Hold a steady cadence, roughly two kicks per second. Holding a key does not automatically repeat kicks.
-- Each perfect alternating kick restores 5 lucidity when not sprinting. The first kick establishes timing; subsequent kicks should be 0.28–0.85 seconds apart. Green feedback confirms recovery.
+- Each perfect alternating kick restores 8 lucidity when not sprinting. The first kick establishes timing; subsequent kicks should be 0.18–1.25 seconds apart. Green feedback confirms recovery.
 - Hold Left Shift while kicking to sprint. Sprinting consumes 9 lucidity per second while swimming actively. It cannot restore lucidity at the same time.
 - Same-side tapping does not build propulsion or restore lucidity. A missed beat breaks the recovery streak without directly subtracting lucidity.
 - Lucidity keeps you in the dream. At 20% or less, an amber warning tells the player to release Shift and recover with perfect rhythm. At zero, movement stops and a failure message appears for 2.5 seconds, then the same dream restarts with full lucidity. This first lesson has no separate oxygen timer.
@@ -26,7 +26,7 @@ Level 1 is a separate map at /Game/DreamSeeker/Levels/FirstRipple/LV_FirstRipple
 
 ## Verification and remaining work
 
-The automated runtime check completed the route through the log and current. Perfect rhythm raised a test reserve from 50 to 90; off-rhythm kicks and the disabled final-dream recovery switch left it unchanged. Normal swimming stalled at the current entrance. Sprint crossed in 7.63 seconds with at least 35.8% lucidity remaining. Empty lucidity triggered failure and restarted the same dream at 100%. Runtime checks reported no missing-object access errors. The QA save was removed after testing.
+The automated runtime check completed the route through the log and current. Varied alternating kick timing raised a test reserve from 25 to 65; off-rhythm kicks and the disabled final-dream recovery switch left it unchanged. Normal swimming stalled at the current entrance. Sprint crossed in 7.63 seconds with at least 35.8% lucidity remaining. Empty lucidity triggered failure and restarted the same dream at 100%. Runtime checks reported no missing-object access errors. The QA save was removed after testing.
 
 The cursor steering was corrected to use viewport coordinates relative to Naia. Live mouse-and-keyboard movement was confirmed by the player, and recorded movement exceeded X=10,800. The full automated route passed again after the visual and automatic tutorial changes.
 

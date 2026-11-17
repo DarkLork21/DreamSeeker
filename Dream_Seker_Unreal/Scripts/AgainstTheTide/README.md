@@ -2,7 +2,7 @@
 
 Enter the second cloud in the Memory Causeway. A four-second countdown starts a single-length competition against three swimmers in separate background lanes.
 
-Mouse aims, alternating A/D taps propel the swimmer, and Left Shift sprints. Each well-timed alternating kick restores 5 lucidity when not sprinting; sprinting spends 9 per active second. The existing team lucidity component and widget are reused. The protagonist remains unnamed in displayed text.
+Mouse aims, alternating A/D taps propel the swimmer, and Left Shift sprints. Each well-timed alternating kick restores 8 lucidity when not sprinting; sprinting spends 9 per active second. The existing team lucidity component and widget are reused. The protagonist remains unnamed in displayed text.
 
 The coral rival starts fast and slows after eighteen seconds. The ivory rival maintains a steady pace. The violet rival accelerates after thirty seconds. Speeds follow fixed race-time rules rather than following the player's position. The HUD shows position and four colored progress tracks.
 
@@ -28,3 +28,6 @@ The race now covers 146.5 metres from the start to the finish at X=15000, compar
 The pool now has custom stone arches, a barrel vault, continuous animated water, fine tile grout, smaller connected lane floats, warm window shafts, cooler water fill, gallery spectators and a staged sunlit finish. Repeated details use instanced batches. Geometry source files are included in race-art-source. The new mesh importer uses explicit axis conversion verified against the saved roof and water bounds.
 
 To apply this extension after the original authoring sequence: extend_race.py, cinematic_race_scene.py, balance_race_light.py, finish_cinematic_light.py, then test_race.py. Test the full route and run validate_race.py before packaging.
+
+
+The MVP uses an intentionally forgiving 0.18–1.25 second alternating-kick window. Repeated same-side kicks do not refill lucidity; holding sprint still prevents recovery. Dreams 3–5 remain in the repository and show Coming soon in the MVP hub. Completing both playable dreams reveals a thank-you acknowledgement.
