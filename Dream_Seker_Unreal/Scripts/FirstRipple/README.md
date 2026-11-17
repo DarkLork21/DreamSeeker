@@ -4,7 +4,7 @@ Open Windows/Dream_Seker_Unreal.exe. Choose Start Game, move right through the h
 
 ## Swimming
 
-- H opens or closes help for the current section. The opening lesson is shown automatically; movement rests while reading. Closing help points the cursor into the water ahead.
+- Short automatic lessons appear at the appropriate places and fade away while play continues. There is no H panel or required dismissal. The opening introduces steering and then alternating kicks; later captions teach rhythm, diving, sprinting and finishing.
 - Point the mouse in the direction Naia should swim. Turning is smoothed; the camera follows at a fixed angle.
 - A gold direction guide shows the current swimming heading. Cursor positions outside the game window and within the small dead zone around Naia leave the previous direction unchanged.
 - Tap A and D alternately for left and right kicks. Hold a steady cadence, roughly two kicks per second. Holding a key does not automatically repeat kicks.
@@ -28,7 +28,13 @@ Level 1 is a separate map at /Game/DreamSeeker/Levels/FirstRipple/LV_FirstRipple
 
 The automated runtime check traversed the route through the log and current to completion. Same-side taps did not restore lucidity; rhythm raised a test reserve from 50 to 57.5; recovery stayed unchanged with the final-dream switch disabled; sprinting lowered it to 48.35; normal movement continued at zero; visiting the finish before the dive did not complete the dream. The QA save was removed after testing.
 
-The cursor steering was subsequently corrected to use viewport coordinates relative to Naia. Live mouse-and-keyboard movement was confirmed by the player, and recorded movement exceeded X=10,800. The full automated route passed again after the steering and help changes. The H guide changes its advice across the shallows, rhythm pool, dive, current and final landing.
+The cursor steering was corrected to use viewport coordinates relative to Naia. Live mouse-and-keyboard movement was confirmed by the player, and recorded movement exceeded X=10,800. The full automated route passed again after the visual and automatic tutorial changes.
+
+## Visual polish pass
+
+The route now uses a continuous sculpted shore, custom willow trunks and drooping foliage, layered distant woodland, a sheltered timber home, quieter materials and lighting, animated water and foliage, underwater depth tint and restrained caustic light. Naia's character proxy turns toward her swimming direction and animates alternating kicks without rotating the camera. Floating instruction labels and the repeated prototype banks were removed.
+
+There are 207 actors and nine detail batches holding 6,242 instances, compared with 844 actors in the preceding candidate. This is an object-count improvement, not a claim about frame rate on other computers. All five sections were rendered and inspected; the final Windows cook and package completed without shader compilation errors. The original learning map remains untouched.
 
 Source assets and Blueprint compilation passed validation. Windows Shipping cooking, staging and packaging completed. Temporary QA maps were excluded from the package.
 

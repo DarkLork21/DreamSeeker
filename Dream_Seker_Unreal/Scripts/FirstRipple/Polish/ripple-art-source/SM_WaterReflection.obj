@@ -1,0 +1,12 @@
+o SM_WaterReflection
+# OBJ right-handed Y conversion
+# Unreal XYZ coordinates
+v 0.000 0.0 0.000
+v 90.000 0.0 0.000
+v 90.000 -3.0 0.000
+v 0.000 -3.0 0.000
+vt 0.00000 0.00000
+vt 0.15000 0.00000
+vt 0.15000 0.00500
+vt 0.00000 0.00500
+f 1/1 2/2 3/3 4/4
