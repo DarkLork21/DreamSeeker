@@ -8,15 +8,15 @@ Open Windows/Dream_Seker_Unreal.exe. Choose Start Game, move right through the h
 - Point the mouse in the direction Naia should swim. Turning is smoothed; the camera follows at a fixed angle.
 - A gold direction guide shows the current swimming heading. Cursor positions outside the game window and within the small dead zone around Naia leave the previous direction unchanged.
 - Tap A and D alternately for left and right kicks. Hold a steady cadence, roughly two kicks per second. Holding a key does not automatically repeat kicks.
-- After four well-timed alternating kicks, each good kick restores 1.5 lucidity. The timing window is 0.30–0.75 seconds.
+- Each perfect alternating kick restores 3 lucidity when not sprinting. The first kick establishes timing; subsequent kicks should be 0.38–0.62 seconds apart. Green feedback confirms recovery.
 - Hold Left Shift while kicking to sprint. Sprinting consumes 9 lucidity per second while swimming actively. It cannot restore lucidity at the same time.
 - Same-side tapping does not build propulsion or restore lucidity. A missed beat breaks the recovery streak without directly subtracting lucidity.
-- Zero lucidity still permits normal swimming. This first lesson has no oxygen timer.
+- Lucidity keeps Naia in the dream. At 20% or less, an amber warning tells the player to release Shift and recover with perfect rhythm. At zero, movement stops and a failure message appears for 2.5 seconds, then the same dream restarts with full lucidity. This first lesson has no separate oxygen timer.
 - Escape opens the existing pause menu. B returns to the hub without awarding completion.
 
 ## Route
 
-Home shallows → rhythm pool → dive beneath the fallen willow → gentle opposing current → lantern landing. Follow the underwater glimmers beneath the log. Reach the final lantern near the surface after making the dive to complete the dream. Completion saves dream 1's seal and returns to the hub.
+Home shallows → rhythm pool → dive beneath the fallen willow → sprint-required opposing current → lantern landing. Follow the underwater glimmers beneath the log. Reach the final lantern near the surface after making the dive to complete the dream. Completion saves dream 1's seal and returns to the hub.
 
 ## Team integration
 
@@ -26,7 +26,7 @@ Level 1 is a separate map at /Game/DreamSeeker/Levels/FirstRipple/LV_FirstRipple
 
 ## Verification and remaining work
 
-The automated runtime check traversed the route through the log and current to completion. Same-side taps did not restore lucidity; rhythm raised a test reserve from 50 to 57.5; recovery stayed unchanged with the final-dream switch disabled; sprinting lowered it to 48.35; normal movement continued at zero; visiting the finish before the dive did not complete the dream. The QA save was removed after testing.
+The automated runtime check completed the route through the log and current. Perfect rhythm raised a test reserve from 50 to 74; off-rhythm kicks and the disabled final-dream recovery switch left it unchanged. Normal swimming stalled at the current entrance. Sprint crossed in 7.63 seconds with at least 35.8% lucidity remaining. Empty lucidity triggered failure and restarted the same dream at 100%. Runtime checks reported no missing-object access errors. The QA save was removed after testing.
 
 The cursor steering was corrected to use viewport coordinates relative to Naia. Live mouse-and-keyboard movement was confirmed by the player, and recorded movement exceeded X=10,800. The full automated route passed again after the visual and automatic tutorial changes.
 
