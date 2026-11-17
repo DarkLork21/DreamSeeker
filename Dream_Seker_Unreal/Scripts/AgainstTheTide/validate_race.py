@@ -14,6 +14,7 @@ for path in A.list_assets(ROOT,True,False):
 levels=unreal.get_editor_subsystem(unreal.LevelEditorSubsystem);actors=unreal.get_editor_subsystem(unreal.EditorActorSubsystem)
 assert levels.load_level(ROOT+'/LV_AgainstTheTide');allactors=actors.get_all_level_actors();report['actors']=len(allactors)
 director=next(a for a in allactors if a.get_class().get_name()=='BP_RaceDirector_C')
+report['finish_x']=director.get_editor_property('FinishX')
 report['three_rivals']=all(director.get_editor_property('Rival'+str(i)) for i in (1,2,3))
 report['completion_slot']=next(a for a in allactors if a.get_class().get_name()=='BP_DreamCompletion_C').get_editor_property('SaveSlot')
 report['original_team_map_preserved']=A.does_asset_exist('/Game/Level_2_Swimming')
@@ -22,7 +23,7 @@ entrance=next(a for a in actors.get_all_level_actors() if a.get_actor_label()=='
 report['cloud_destination']=str(entrance.get_editor_property('destination'))
 report['five_saved_completion_beacons']=sum(a.get_class().get_name()=='BP_CloudCompletion_C' for a in actors.get_all_level_actors())==5
 saved=Path(unreal.Paths.project_saved_dir());logs=saved/'Logs'
-win=(logs/'RaceFinalWin.log').read_text();loss=(logs/'RaceFinalLoss.log').read_text();empty=(logs/'RaceEmpty.log').read_text();route=(logs/'RaceCloudRoute.log').read_text()
+win=(logs/'LongRaceWin.log').read_text();loss=(logs/'LongRaceLoss.log').read_text();empty=(logs/'LongRaceEmpty.log').read_text();route=(logs/'RaceCloudRoute.log').read_text()
 report['win_returns_to_hub']='Load map complete /Game/Dreamhub_MemoryCauseway' in win
 report['win_saves_seal']=unreal.GameplayStatics.does_save_game_exist('DreamSeeker.QA.Race.Win',0)
 report['loss_restarts_race']='Load map complete '+ROOT+'/LV_AgainstTheTide' in loss
@@ -30,5 +31,6 @@ report['loss_awards_no_seal']=not unreal.GameplayStatics.does_save_game_exist('D
 report['empty_restarts']='DreamFailed = True' in empty and empty.count('Load map complete /Game/__RaceQA/Empty')>=2
 report['cloud_enters_race']='Load map complete '+ROOT+'/LV_AgainstTheTide' in route
 report['no_runtime_access_errors']=all('Accessed None' not in s and 'Blueprint Runtime Error' not in s for s in (win,loss,empty,route))
-report['passed']=all(report[k] for k in ('three_rivals','original_team_map_preserved','five_saved_completion_beacons','win_returns_to_hub','win_saves_seal','loss_restarts_race','loss_awards_no_seal','empty_restarts','cloud_enters_race','no_runtime_access_errors')) and report['completion_slot']=='DreamSeeker.Memory.02' and not report['blueprint_errors'] and not report['missing_dependencies']
+report['long_course']=report['finish_x']==15000.0
+report['passed']=report['long_course'] and all(report[k] for k in ('three_rivals','original_team_map_preserved','five_saved_completion_beacons','win_returns_to_hub','win_saves_seal','loss_restarts_race','loss_awards_no_seal','empty_restarts','cloud_enters_race','no_runtime_access_errors')) and report['completion_slot']=='DreamSeeker.Memory.02' and not report['blueprint_errors'] and not report['missing_dependencies']
 (saved/'RaceValidation.json').write_text(json.dumps(report,indent=2));unreal.log('RACE_VALIDATION '+json.dumps(report));assert report['passed']

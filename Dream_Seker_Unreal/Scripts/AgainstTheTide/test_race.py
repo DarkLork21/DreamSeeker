@@ -14,11 +14,10 @@ for case in ('Win','Loss','Empty','Render'):
     if case!='Empty':
         tick=L.add_event_override(bp,'ReceiveTick',unreal.IntPoint(0,7000));T=Graph(g,7500);now=T.call('GameplayStatics.GetTimeSeconds').find_output_pin('ReturnValue')
         pulse=T.branch(tick.find_then_pin(),T.math('GreaterEqual_DoubleDouble',A=now,B=T.read('NextKick')));e2=T.set(pulse.find_then_pin(),'NextKick',T.math('Add_DoubleDouble',A=now,B='.5'))
-        if case=='Win':
-            get=T.do(tick.find_then_pin(),'GameplayStatics.GetActorOfClass',ActorClass=MC) if False else None
-            # Sprint in controlled bursts, recovering during the middle section.
+        if case in ('Win','Render'):
+            # Repeat controlled sprint/recovery cycles across the longer course.
             age=T.math('Subtract_DoubleDouble',A=now,B='4')
-            sprint=T.math('BooleanOR',A=T.math('Less_DoubleDouble',A=age,B='5'),B=T.math('Greater_DoubleDouble',A=age,B='11'))
+            sprint=T.math('Greater_DoubleDouble',A=T.math('Sin',A=T.math('Multiply_DoubleDouble',A=age,B='.5711986643')),B='.05')
             e2=T.set(e2,'Sprinting',sprint,PC,p)
         side=T.branch(e2,T.read('LeftNext'))
         for left in (True,False):
@@ -33,9 +32,11 @@ for case in ('Win','Loss','Empty','Render'):
         out=Path(__file__).parent.parent/'outputs/DreamSeeker-Level2';out.mkdir(exist_ok=True)
         command('Shot showui -nosuffix filename="'+str(out/'Race-Start.png').replace('\\','/')+'"',2)
         command('Shot showui -nosuffix filename="'+str(out/'Race-In-Progress.png').replace('\\','/')+'"',9)
+        command('Shot showui -nosuffix filename="'+str(out/'Race-Central-Gallery.png').replace('\\','/')+'"',12)
+        command('Shot showui -nosuffix filename="'+str(out/'Race-Final-Stretch.png').replace('\\','/')+'"',12)
         command('Quit',.5)
     else:
-        for j in range(5):
+        for j in range(12):
             command('GetAll BP_RaceDirector_C RaceTime',5);command('GetAll BP_RaceDirector_C RacePosition');command('GetAll BP_RaceDirector_C Finished');command('GetAll BP_RaceDirector_C PlayerWon');command('GetAll BPC_Lucidity_C CurrentLucidity');command('GetAll CapsuleComponent RelativeLocation')
     compile_save(bp)
     assert levels.load_level(ROOT+'/LV_AgainstTheTide')
