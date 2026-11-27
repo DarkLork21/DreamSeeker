@@ -12,7 +12,7 @@ LEVELS = unreal.get_editor_subsystem(unreal.LevelEditorSubsystem)
 ACTORS = unreal.get_editor_subsystem(unreal.EditorActorSubsystem)
 LUCIDITY = '/Game/DreamSeeker/Blueprints/Components/BPC_Lucidity.BPC_Lucidity_C'
 WIDGET = '/Game/DreamSeeker/UI/WBP_LucidityBar.WBP_LucidityBar_C'
-CENTER, PLANE, START, BOTTOM = -2800, 1380, 7050, 1270
+CENTER, PLANE, START, BOTTOM = -2800, 1380, 9150, 1270
 
 
 def blueprint(name, parent=None, template=None):
@@ -99,7 +99,8 @@ g = graph(pawn, False)
 g.remove_nodes([n for n in g.list_all_nodes() if
                 (n.get_node_pos().y < 2900 and 'BeginPlay' not in str(n.get_node_title()).replace(' ', ''))
                 or n.get_node_pos().y >= 5000])
-properties(pawn, {'AttemptEnded': False, 'LastFishHit': -10.0, 'ReleaseAt': 0.0})
+properties(pawn, {'AttemptEnded': False, 'LastFishHit': -10.0, 'ReleaseAt': 0.0,
+                  'SteeringAxis': 0.0})
 handles = sub.k2_gather_subobject_data_for_blueprint(pawn)
 components = [data.get_object_for_blueprint(data.get_data(h), pawn) for h in handles]
 for component in components:
@@ -196,7 +197,10 @@ def key_axis(variable):
     return T.math('SelectFloat',A='1',B='0',bPickA=T.read(variable))
 
 steer = subtract(T,key_axis('MoveLeft'),key_axis('MoveRight'))
-x = T.math('FClamp', Value=add(T,axes.find_output_pin('X'),multiply(T,steer,multiply(T,dt,'830'))),
+smoothed = T.math('FInterpTo', Current=T.read('SteeringAxis'), Target=steer,
+                  DeltaTime=dt, InterpSpeed='15')
+active = T.set(active, 'SteeringAxis', smoothed)
+x = T.math('FClamp', Value=add(T,axes.find_output_pin('X'),multiply(T,T.read('SteeringAxis'),multiply(T,dt,'830'))),
            Min=str(CENTER-1040), Max=str(CENTER+1040))
 z = T.math('FMax', A=subtract(T,axes.find_output_pin('Z'),multiply(T,dt,'440')), B=str(BOTTOM))
 T.do(active, 'Actor.K2_SetActorLocation', NewLocation=vector(T,X=x,Y=str(PLANE),Z=z))
@@ -327,10 +331,19 @@ rows = [
     (3150, -3410, 490, 1.1, .9, 'ButterflyFish', 280, 195),
     (2460, -2730, 780, 1.24, 2.4, 'AngelFish', 355, 210),
     (1900, -3210, 510, 1.0, .7, 'ButterflyFish', 290, 205),
+    (6720, -2530, 590, 1.18, 2.6, 'ButterflyFish', 265, 195),
+    (5940, -3140, 580, 1.23, .4, 'AngelFish', 305, 190),
+    (5200, -2590, 640, 1.19, 2.8, 'ButterflyFish', 270, 190),
+    (4490, -2220, 520, 1.22, .6, 'AngelFish', 310, 200),
+    (3880, -3220, 610, 1.27, 2.9, 'ButterflyFish', 280, 195),
+    (2800, -2250, 570, 1.28, .8, 'AngelFish', 310, 195),
+    (2170, -2520, 570, 1.18, 2.6, 'ButterflyFish', 275, 190),
     (1290, -2260, 0, 0, 0, 'ClownFish', 495, 255),
 ]
 for index, (depth, center, amplitude, rate, phase, mesh, width, height) in enumerate(rows):
     target = mesh == 'ClownFish'
+    if not target:
+        width, height = width * .8, height * .8
     label = 'Fishing - Target Clownfish' if target else f'Fishing - Patrol {index+1:02}'
     position = unreal.Vector(center,PLANE,depth)
     a = find_actor(label) or check(ACTORS.spawn_actor_from_class(fish.generated_class(),position,
